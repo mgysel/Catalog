@@ -1,46 +1,50 @@
 <head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login-signup.css') }}">
-		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login-signup-media.css') }}">
-		<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
-		<script src="{{url_for('static', filename='scripts/jquery-3.2.1.min.js')}}"></script>
-   		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script src="//apis.google.com/js/platform.js?onload=start"></script>
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login-signup.css') }}">
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login-signup-media.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+	<script src="{{url_for('static', filename='scripts/jquery-3.2.1.min.js')}}"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="//apis.google.com/js/platform.js?onload=start"></script>
 </head>
 <body>
 	<nav class='nav'>
 		<a class='title' href="{{url_for('catalog')}}">C A T A L O G</a>
 	</nav>
-	<!-- GOOGLE PLUS SIGN IN-->
-	<div class='oauth-sign-in'>
-		<!-- 
-		scope - what user info want to access?
-		clientid - client id you registered
-		accesstype offline - server can make requests offline
-		cookiepolicy single_host_origin - only this single host name can access cookie
-		callback - specifies callback function if user clicks and grants access, given onetime use code and access token
-		approvalprompt force - forces user to sign in each time, good for debugging but not for actual use
-		-->
-		<span class="g-signin"
-			data-scope="openid email"
-			data-clientid="269121368386-0qorkmb2q3duoi6874luj57iorelk7uf.apps.googleusercontent.com"
-			data-redirecturi="postmessage"
-			data-accesstype="offline"
-			data-cookiepolicy="single_host_origin"
-			data-callback="signInCallback" data-width="800" data-height="500">
-		</span>
+	<div class='oauth-container'>
+		<!-- GOOGLE PLUS SIGN IN-->
+		<div class='oauth-sign-in google-sign-in'>
+			<!-- 
+			scope - what user info want to access?
+			clientid - client id you registered
+			accesstype offline - server can make requests offline
+			cookiepolicy single_host_origin - only this single host name can access cookie
+			callback - specifies callback function if user clicks and grants access, given onetime use code and access token
+			approvalprompt force - forces user to sign in each time, good for debugging but not for actual use
+			-->
+			<span class="g-signin"
+				data-scope="openid email"
+				data-clientid="269121368386-0qorkmb2q3duoi6874luj57iorelk7uf.apps.googleusercontent.com"
+				data-redirecturi="postmessage"
+				data-accesstype="offline"
+				data-cookiepolicy="single_host_origin"
+				data-callback="signInCallback" data-width="800" data-height="500">
+			</span>
+		</div>
+		<!-- FACEBOOK SIGN IN-->
+		<button class='oauth-sign-in facebook-sign-in'> 
+			<!-- 
+			Gives us FB SDK to create FB Login Button
+				scope - info app wants to request
+			When clicked, invoke SendTokenToServer method
+			 -->
+			<fb:login-button class='f-signin' scope="public_profile,email" onlogin="sendTokenToServer();" size="large">
+				<a href='javascript:sendTokenToServer()' font-size="20px">Signup/Login</a>
+			</fb:login-button>
+		</button>
 	</div>
-	<!-- FACEBOOK SIGN IN-->
-	<button class='oauth-sign-in'> 
-		<!-- 
-		Gives us FB SDK to create FB Login Button
-			scope - info app wants to request
-		When clicked, invoke SendTokenToServer method
-		 -->
-		<fb:login-button class='f-signin' scope="public_profile,email" onlogin="sendTokenToServer();" size="large">
-			<a href='javascript:sendTokenToServer()' font-size="20px">Signup/Login</a>
-		</fb:login-button>
-	</button>
 	<div class="signup-login-container signup-container background-box-1">
 		<form class="signup-login-form signup-form" action='/signup' method='POST'>
 			<div class='email-div'>
@@ -130,7 +134,7 @@
 	<script>
 		window.fbAsyncInit = function() {
 			FB.init({
-				appId      : '1929117134002892',
+				appId      : '2011590259073867',
 				cookie     : true,  // enable cookies to allow the server to access 
 									// the session
 				xfbml      : true,  // parse social plugins on this page
@@ -160,6 +164,7 @@
 			FB.api('/me', function(response) {
 				console.log('Successful login for: ' + response.name);
 				// Send access token to server via AJAX, along with state value
+				// AJAX REQUEST NOT OCCURING
 				$.ajax({
 					type: 'POST',
 					url: '/fbconnect?state={{STATE}}',
@@ -169,7 +174,7 @@
 					success: function(result) {
 						// Handle or verify the server response if necessary.
 						if (result) {
-							$('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+							$('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...');
 							window.location.href = "/";
 						} else {
 							$('#result').html('Failed to make a server-side call. Check your configuration and console.');

@@ -16,14 +16,13 @@ a:hover {
 
 .nav {
     position: absolute;
-	width: 67%;
+	width: 100%;
 	padding: 20px;
-	margin-left: 33%;
 	background-color: #ffa5a5;
 }
 
 .title {
-	margin-left: 155px;
+	margin-left: calc((100% - 305.66px)/2);
 	font-size: 68px;
 	font-family: 'Passion One', cursive; 
 	color: black; 
@@ -35,25 +34,34 @@ a:hover {
 }
 
 /* Main containers */ 
+.oauth-container {
+	margin-top: 157px;
+	height: 80px;
+	width: 60%;
+	z-index: -1;
+	float: left;
+	margin-left: 20%;
+	background-color:#8bff8b;
+}
+
 .signup-login-container {
-    margin-top: 90px; 
+    margin-top: 20px; 
 }
 
 .signup-container { 
 	height: 520px;; 
-	width: calc(48.5% - 2px);
+	width: 43%;
 	z-index: -1;
 	float: left;
-	margin-left: 8%;
+	margin-left: 5%;
 	background-color:#8bff8b;
 }  
 
 .login-container { 
 	height: 530px; 
-	width: calc(38% - 2px); 
+	width: 43%; 
 	float: right;
-	margin-top: 130px;
-	margin-right: 3%;  
+	margin-right: 5%;  
 	background-color: #8bff8b; 
 }
 
@@ -107,9 +115,20 @@ a:hover {
 }
 
 /* oAuth Buttons */
-.oauth-sign-in {   
+.oauth-sign-in {    
 	margin: 0;
 	padding: 0;
 	border: 0;
-	display: inline-block;
+}
+
+.google-sign-in {
+	margin-top: calc((80px - 31px)/2);
+	margin-left: calc((100% - (119px + 116px + 45px))/2);
+}
+
+.facebook-sign-in {
+	float: right;
+	margin-right: calc((100% - (119px + 116px + 45px))/2);
+	margin-bottom: 20px;
+	margin-top: calc(-1*(80px - 16px)/2);
 }

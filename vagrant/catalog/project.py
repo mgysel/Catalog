@@ -348,8 +348,10 @@ def logout():
 	access_token = login_session.get('access_token')
 	# If credentials field is empty, do not have record of a user,
 	# so no one to disconnect from app
-	if access_token is not None:
+	if login_session['provider'] == 'google':
 		return redirect(url_for('gdisconnect'))
+	elif login_session['provider'] == 'facebook':
+		return redirect(url_for('fbdisconnect'))
 	else:
 		# Delete username and user_id from login session
 		login_session.pop('username', None)
@@ -466,7 +468,7 @@ def gconnect():
 
     # Store the access token in the session for later use.
     login_session['access_token'] = credentials.access_token
-    login_session['gplus_id'] = gplus_id
+    login_session['provider'] = 'google'
 
     # Get user info
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
@@ -514,7 +516,7 @@ def gdisconnect():
 	if result['status'] == '200':
     	# Reset the user's sesson.
 		del login_session['access_token']
-		del login_session['gplus_id']
+		del login_session['provider']
 		del login_session['username']
 		del login_session['email']
 
@@ -606,7 +608,16 @@ def fbdisconnect():
     url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
-    return "you have been logged out"
+
+    # Delete login_session values
+    del login_session['provider']
+    del login_session['username']
+    del login_session['email']
+    del login_session['facebook_id']
+    del login_session['picture']
+    del login_session['access_token']
+
+    return redirect(url_for('catalog'))
 
 
 # application run by python interpreter gets name __main__
