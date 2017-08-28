@@ -258,14 +258,26 @@ def deleteItem(category_id, item_id):
 
 
 ##### API ENDPOINTS #####
-# New Item Page
-@app.route('/api', methods=['GET','POST'])
+# For category requests with url variables 
+@app.route('/api')
+def category_items():
+	# Returns items specific to category
+	category = request.args.get('category')
+	category_id = session.query(Category).filter_by(name=category).one().id
+	items = session.query(Item).filter_by(category_id=category_id).all()
+	return jsonify(items = [i.serialize for i in items])
+# All categories
+@app.route('/api/categories', methods=['GET','POST'])
+def all_categories():
+	# Return all items in database
+	categories = session.query(Category).all()
+	return jsonify(categories = [category.serialize for category in categories])
+# All Items
+@app.route('/api/items', methods=['GET','POST'])
 def all_items():
-	if request.method == 'GET':
-		# Return all items in database
-		items = session.query(Item).all()
-		return jsonify(items = [i.serialize for i in items])
-
+	# Return all items in database
+	items = session.query(Item).all()
+	return jsonify(items = [i.serialize for i in items])
 
 ##### AUTHORIZATION #####
 # Validate

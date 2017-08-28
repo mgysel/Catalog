@@ -85,7 +85,6 @@ class Category(Base):
 		# Returns object data in an easily serializeable format
 		return {
 			'id': self.id,
-			# 'user_id': self.user_id,
 			'name': self.name
 		} 
 
@@ -122,8 +121,6 @@ class Item(Base):
 	def serialize(self):
 		# Returns object data in an easily serializeable format
 		return {
-			'id': self.id,
-			'user_id': self.user_id,
 			'category_id': self.category_id,
 			'name': self.name,
 			'description': self.description
