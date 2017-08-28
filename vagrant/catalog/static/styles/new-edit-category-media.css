@@ -32,10 +32,13 @@
 		margin-left: calc((100% - 224.75px)/2);
 	}
 	.login-signup {
+		width: 100px;
 		margin-top: 0;
-		margin-right: calc((100% - 42.719px)/2);
+		margin-right: calc((100% - 100px)/2);
 	}
 	.category-element {
 	    width: 85%;
 	}
+	.flashes {
+		margin-left: calc((20%/2) + 5px);
 }

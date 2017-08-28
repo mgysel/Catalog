@@ -10,8 +10,10 @@ for (var i = 0; i < forms.length; i++) {
 
 
 
-
+$(".signup-submit").attr("disabled", "true");
 //  ******* SUBMIT BUTTON - ENABLE/DISABLE *******
+// Disable submit button on page load
+$(".signup-submit").attr("disabled", "true");
 // Function that enables submit button if all conditions are met
 var enableSubmit = function() {
 	// Signup Button

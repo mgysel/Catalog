@@ -1,14 +1,14 @@
 // Useful Variables
-var newItemName = $('.new-item-name');
-var newItemDescription = $('.new-item-description');
+var newItemName = $('.item-name');
+var newItemDescription = $('.item-description');
 //  ******* SUBMIT BUTTON - ENABLE/DISABLE *******
 // Disable Submit Button
-var newItemSubmit = $(".new-item-submit");
+var newItemSubmit = $(".item-submit");
 newItemSubmit.attr("disabled", "true");
 // Function that enables submit button if all conditions are met
 var enableSubmit = function() {
 	// If length of name and description not 0, enable submit button
-	if (newItemName.val().length > 0) {
+	if ((newItemName.val().length > 0) && (newItemDescription.val().length > 0)) {
 		newItemSubmit.removeAttr("disabled");
 	} else {
 		newItemSubmit.attr("disabled", "true");
@@ -35,8 +35,6 @@ newItemDescription.keyup(function() {
 // Inputs input element, error message box, and validation message
 // and styles the border accordingly
 var inputStyling = function(input, message) {
-	// input and length of input variable
-	var inputLen = input.val().length;
 	// If the length is 0, style input
 	if (input.val().length == 0) {
 		input.css("border", "3px solid #cc0000");

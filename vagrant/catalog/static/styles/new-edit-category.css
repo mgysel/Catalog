@@ -53,12 +53,18 @@ a:hover {
 	display: block;
 	height: 46px;
 	width: 400px;
-	padding-left: 5px;
+	padding-left: 5px; 
 	margin-top: 12px;
 	margin-bottom: 10px;
 	border: 2.5px solid #fff; 
 	border-radius: 6px;
 	font-size: 25px;
+}
+
+.flashes {
+	margin-left: calc(((100% - 400px)/2) + 10px);
+	margin-bottom: 0;
+	font-size: 22px;
 }
 
 .category-submit {

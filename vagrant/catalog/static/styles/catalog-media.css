@@ -3,6 +3,7 @@
 		display: none;
 	}
 	.categories {
+		float: initial;
 		background-color: #ffa5a5;
 		width: 90%; 
 		margin-left: 5%; 
@@ -11,13 +12,16 @@
 	.background-box-2 {
 		display: none;
 	}
-	.latest-items {
-		background-color: #8bff8b; 
-		margin-left: 5%;
-		margin-top: 208px;
+	.latest-items { 
+		float: initial;
 		width: 90%;
+		margin-top: 20px;
+		margin-left: 5%;
+		margin-bottom: 20px;
+		background-color: #8bff8b;  
 	}
-	.latest-items-title {
+	.main-section-title {
+		margin-top: 0;
 		padding-top: 20px;
 	}
 }

@@ -1,8 +1,8 @@
 // Useful Variables
-var newCategoryName = $('.new-category-name');
+var newCategoryName = $('.category-name');
 //  ******* SUBMIT BUTTON - ENABLE/DISABLE *******
 // Disable Submit Button
-var newCategorySubmit = $(".new-category-submit");
+var newCategorySubmit = $(".category-submit");
 newCategorySubmit.attr("disabled", "true");
 // Function that enables submit button if all conditions are met
 var enableSubmit = function() {
@@ -30,8 +30,6 @@ newCategoryName.keyup(function() {
 // Inputs input element, error message box, and validation message
 // and styles the border accordingly
 var inputStyling = function(input, message) {
-	// input and length of input variable
-	var inputLen = input.val().length;
 	// If the length is 0, style input
 	if (input.val().length == 0) {
 		input.css("border", "3px solid #cc0000");

@@ -49,7 +49,6 @@ a:hover {
 }
 
 .signup-container { 
-	height: 520px;; 
 	width: 43%;
 	z-index: -1;
 	float: left;
@@ -58,7 +57,6 @@ a:hover {
 }  
 
 .login-container { 
-	height: 530px; 
 	width: 43%; 
 	float: right;
 	margin-right: 5%;  
@@ -71,11 +69,13 @@ a:hover {
 }
 
 .signup-form {
-	margin-top: 105px;
+	margin-top: 60px;
+	margin-bottom: 60px;
 }  
 
 .login-form {
-	margin-top: 125px; 
+	margin-top: calc((375px - 155px)/2); 
+	margin-bottom: calc((375px - 155px)/2); 
 }
 
 .signup-login-input { 
@@ -91,6 +91,10 @@ a:hover {
 .signup-login-input::placeholder {
 	padding-left: 5px;
 	font-size: 25px;
+}
+
+.password-validation {
+	margin-bottom: 0;
 }
 
 .validation {

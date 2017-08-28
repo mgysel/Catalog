@@ -2,10 +2,13 @@
 	.item-element {
 	    width: 90%;
 	}
+	.flashes {
+		margin-left: calc(5% + 10px);	
+	}
 }
 @media (max-width: 600px) {
 	.nav {
-	    position: static;
+	    position: static; 
 	    margin-left: 5%;
 	    margin-top: 20px;
 	    width: 90%;
@@ -37,7 +40,10 @@
 		margin-left: calc((100% - 224.75px)/2);
 	}
 	.login-signup {
+		width: 100px;
 		margin-top: 0;
-		margin-right: calc((100% - 42.719px)/2);
+		margin-right: calc((100% - 100px)/2);
 	}
+	.flashes {
+		margin-left: calc((10%/2) + 10px);
 }

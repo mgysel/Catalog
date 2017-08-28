@@ -20,7 +20,7 @@ a:hover {
 	margin-left: 4%;
 	margin-top: 30px;
 	width: 70%; 
-	background-color: #ff7f7f;#8bff8b;
+	background-color: #ff7f7f;
 }
 
 .title {
@@ -45,7 +45,6 @@ a:hover {
 	width: 85%;
 	margin-left: 10%;  
 	margin-top: 130px; 
-	height: 75vh; 
 	z-index: -1;
 }
 
@@ -53,8 +52,10 @@ a:hover {
 	background-color: #fff;
 }
 /* Main boxes */
-.item-form {   
+.item-form {  
+	padding-bottom: 20px; 
 	margin-top: 85px;
+	margin-bottom: 20px;
 } 
 
 .item-input {
@@ -69,13 +70,19 @@ a:hover {
 	border: 2.5px solid #fff; 
 }
 
+.flashes {
+	margin-left: calc(10% + 10px);
+	margin-bottom: 0;
+	font-size: 22px;
+}
+
 .item-description {
 	height: 200px;
 }
 
 .item-input::placeholder {
 	font-size: 25px;
-	padding-left: 5px;
+	padding-left: 5px; 
 }
 
 .item-submit {

@@ -6,7 +6,7 @@ var toggleProperty = function(DOMElement1, DOMElement2, property, value1, value2
 	} else {
 		DOMElement1.css(property, value1);
 	}
-}
+};
 
 
 // Useful variables

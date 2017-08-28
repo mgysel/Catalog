@@ -6,7 +6,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/new-edit-item.css') }}">
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/new-edit-item-media.css') }}">
-		<script src="{{url_for('static', filename='scripts/jquery-3.2.1.min.js')}}"></script>
 		<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
 	</head>
 	<body>
@@ -25,5 +24,7 @@
 				<input class='item-submit item-element center-block' type='submit' value='Save'>
 			</form>
 		</div>
+		<script src="{{url_for('static', filename='scripts/jquery-3.2.1.min.js')}}"></script>
+		<script src="{{url_for('static', filename='scripts/newItemValidation.js')}}"></script>
 	</body>
 </html>

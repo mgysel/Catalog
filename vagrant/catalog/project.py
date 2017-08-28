@@ -84,7 +84,7 @@ def category(category_id):
 	# Find the category based on the id
 	category = session.query(Category).filter_by(id=category_id).one()
 	# Find all items for the category
-	items = session.query(Item).filter_by(category_id=category_id).all()
+	items = session.query(Item).filter_by(category_id=category_id).limit(10)
 	# Renders category
 	return render_template('category.html', category=category, items=items, login_session=login_session)
 
@@ -96,9 +96,9 @@ def newCategory():
 		# Get the user id
 		user_id = login_session['user_id']
 		# Gets new category name from form
-		name = request.form['new-category-name']
+		name = request.form['category-name']
 		# Checks to see if duplicate category
-		if session.query(Category).filter_by(name=name):
+		if session.query(Category).filter_by(name=name).all():
 			# Flash duplicate category
 			flash("Duplicate Category ;(")
 			return redirect(url_for('newCategory'))
@@ -126,13 +126,19 @@ def editCategory(category_id):
 	if request.method == 'POST':
 		# Gets new category name from form
 		name = request.form['edit-category-name']
-		# Find Category database entry with name=category, update with form entry
-		editCategory = session.query(Category).filter_by(id=category_id).one()
-		editCategory.name = name
-		session.add(editCategory)
-		session.commit()
-		# Redirect to main catalog page
-		return redirect(url_for('catalog'))
+		# Checks to see if duplicate category
+		if session.query(Category).filter_by(name=name).all():
+			# Flash duplicate category
+			flash("Duplicate Category ;(")
+			return redirect(url_for('editCategory', category_id=category_id))
+		else:
+			# Find Category database entry with name=category, update with form entry
+			editCategory = session.query(Category).filter_by(id=category_id).one()
+			editCategory.name = name
+			session.add(editCategory)
+			session.commit()
+			# Redirect to main catalog page
+			return redirect(url_for('catalog'))
 	else:
 		# Finds category, based on category_id
 		category = session.query(Category).filter_by(id=category_id).one()
@@ -186,7 +192,7 @@ def newItem():
 			return redirect(url_for('newItem'))
 		else:
 			# Outputs content to database
-			newItem = Item(user_id=user_id, name=name, description=description, category_id=category_id)
+			newItem = Item(user_id=user_id, category_id=category_id, name=name, description=description)
 			session.add(newItem)
 			session.commit()
 			# Redirect to main catalog page
@@ -249,6 +255,16 @@ def deleteItem(category_id, item_id):
 		item = session.query(Item).filter_by(id=item_id).one()
 		# Renders edit category page
 		return render_template('deleteItem.html', category=category, item=item, login_session=login_session)
+
+
+##### API ENDPOINTS #####
+# New Item Page
+@app.route('/api', methods=['GET','POST'])
+def all_items():
+	if request.method == 'GET':
+		# Return all items in database
+		items = session.query(Item).all()
+		return jsonify(items = [i.serialize for i in items])
 
 
 ##### AUTHORIZATION #####
@@ -343,14 +359,13 @@ def login():
 # Function that logs user out
 @app.route('/logout', methods=['GET','POST'])
 def logout():
-	# Only disconnect a connected user.
-	# Grab credentials field again
-	access_token = login_session.get('access_token')
-	# If credentials field is empty, do not have record of a user,
-	# so no one to disconnect from app
-	if login_session['provider'] == 'google':
+	# Check which provider the user is using
+	provider = login_session.get('provider')
+
+	# Disconnect accordingly
+	if provider == 'google':
 		return redirect(url_for('gdisconnect'))
-	elif login_session['provider'] == 'facebook':
+	elif provider == 'facebook':
 		return redirect(url_for('fbdisconnect'))
 	else:
 		# Delete username and user_id from login session
@@ -468,7 +483,7 @@ def gconnect():
 
     # Store the access token in the session for later use.
     login_session['access_token'] = credentials.access_token
-    login_session['provider'] = 'google'
+    login_session['gplus_id'] = gplus_id
 
     # Get user info
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
@@ -479,6 +494,7 @@ def gconnect():
     # Store info we want into login_session
     login_session['username'] = data['name']
     login_session['email'] = data['email']
+    login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
     user_id = getUserID(data["email"])
@@ -502,7 +518,7 @@ def gconnect():
 def gdisconnect():
 	# Only disconnect a connected user.
 	# Grab credentials field again
-	access_token = login_session.get('access_token')
+	access_token = login_session['access_token']
 	# If credentials field is empty, do not have record of a user,
 	# so no one to disconnect from app
 	if access_token is None:
@@ -516,7 +532,7 @@ def gdisconnect():
 	if result['status'] == '200':
     	# Reset the user's sesson.
 		del login_session['access_token']
-		del login_session['provider']
+		del login_session['gplus_id']
 		del login_session['username']
 		del login_session['email']
 
@@ -596,7 +612,6 @@ def fbconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
 
-    flash("Now logged in as %s" % login_session['username'])
     return output
 
 

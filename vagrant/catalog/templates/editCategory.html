@@ -14,6 +14,15 @@
 		<div class='background-box-1'>
 			<form class='category-form' action='/category/{{category.id}}/edit' method='POST'>
 				<input class='category-name category-input category-element center-block' type='text' name='edit-category-name' value='{{category.name}}'>
+				{% with messages = get_flashed_messages() %}
+		  			{% if messages %}
+		    			<p class='flashes'>
+		    				{% for message in messages %}
+		      					{{ message }}
+		    				{% endfor %}
+		    			</p>
+		  			{% endif %}
+				{% endwith %}
 				<input class='category-submit category-element center-block' type='submit' value='Save'>
 			</form>
 		</div>
