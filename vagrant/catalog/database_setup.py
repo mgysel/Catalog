@@ -107,7 +107,11 @@ class Item(Base):
 		Integer,
 		ForeignKey('Category.id')	
 		)
-	category = relationship(Category)
+	category = relationship(
+		Category, 
+		single_parent = True,
+		cascade='all, delete-orphan'
+		)
 	name = Column(
 		String(80),
 		nullable = False
